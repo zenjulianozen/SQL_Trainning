@@ -1,0 +1,38 @@
+# === Segredos ===
+.env
+
+# === Ambientes virtuais ===
+.venv/
+venv/
+env/
+
+# === Python cache ===
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# === IDE / Editor ===
+.vscode/
+.idea/
+*.swp
+
+# === Sistema operacional ===
+.DS_Store
+Thumbs.db
+
+# === Logs ===
+*.log
+
+# === Banco local / artefatos ===
+*.sqlite3
+
+# === Testes / cobertura ===
+.coverage
+htmlcov/
+.pytest_cache/
+
+# === Build / distribuição ===
+build/
+dist/
+*.egg-info/
