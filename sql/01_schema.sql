@@ -60,3 +60,18 @@ create table bairro (
 );
 
 COMMIT;
+
+---
+BEGIN;
+
+create table uf (
+	id_uf int not null,
+	nome varchar(30) not null,
+	sigla char(2) not null,
+
+	constraint pk_ufd_id_uf primary key (id_uf),
+	constraint un_ufd_nome unique (nome),
+	constraint un_ufd_sigla unique (sigla)
+);
+
+COMMIT;

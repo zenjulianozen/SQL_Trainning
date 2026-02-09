@@ -121,3 +121,15 @@ insert into bairro (id_bairro, nome) values (3, 'São Pedro');
 insert into bairro (id_bairro, nome) values (4, 'Santa Rosa');
 
 COMMIT;
+
+---
+BEGIN;
+
+insert into uf (id_uf, nome, sigla) values (1, 'Santa Catarina', 'SC');
+insert into uf (id_uf, nome, sigla) values (2, 'Paraná', 'PR');
+insert into uf (id_uf, nome, sigla) values (3, 'São Paulo', 'SP');
+insert into uf (id_uf, nome, sigla) values (4, 'Minas Gerais', 'MG');
+insert into uf (id_uf, nome, sigla) values (5, 'Rio Grande do Sul', 'RS');
+insert into uf (id_uf, nome, sigla) values (6, 'Rio de Janeiro', 'RJ');
+
+COMMIT;
