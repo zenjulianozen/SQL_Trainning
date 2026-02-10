@@ -72,4 +72,9 @@ select
 from clientes
 order by nome
 
+-- Generic query
 select * from uf
+
+---
+select municipio, uf from clientes
+order by municipio

@@ -35,3 +35,28 @@ foreign key (id_complemento)
 references complemento(id_complemento);
 
 COMMIT;
+
+---
+BEGIN;
+
+alter table municipio
+add constraint fk_nmc_id_uf
+foreign key (id_uf)
+references uf (id_uf);
+
+COMMIT;
+
+---
+BEGIN;
+
+alter table clientes
+add constraint fk_clientes_id_uf
+foreign key (id_uf)
+references uf (id_uf);
+
+alter table clientes
+add constraint fk_clientes_id_municipio
+foreign key (id_municipio)
+references municipio (id_municipio);
+
+COMMIT;
