@@ -133,3 +133,19 @@ insert into uf (id_uf, nome, sigla) values (5, 'Rio Grande do Sul', 'RS');
 insert into uf (id_uf, nome, sigla) values (6, 'Rio de Janeiro', 'RJ');
 
 COMMIT;
+
+---
+BEGIN;
+
+insert into municipio (id_municipio, nome, id_uf) values (1, 'Porto União', 1);
+insert into municipio (id_municipio, nome, id_uf) values (2, 'Canoinhas', 1);
+insert into municipio (id_municipio, nome, id_uf) values (3, 'Porto Vitória', 2);
+insert into municipio (id_municipio, nome, id_uf) values (4, 'General Carneiro', 2);
+insert into municipio (id_municipio, nome, id_uf) values (5, 'São Paulo', 3);
+insert into municipio (id_municipio, nome, id_uf) values (6, 'Rio de Janeiro', 6);
+insert into municipio (id_municipio, nome, id_uf) values (7, 'Uberlândia', 4);
+insert into municipio (id_municipio, nome, id_uf) values (8, 'Porto Alegre', 5);
+insert into municipio (id_municipio, nome, id_uf) values (9, 'União da Vitória', 2);
+insert into municipio (id_municipio, nome, id_uf) values (10, 'Curitiba', 2);
+
+COMMIT;

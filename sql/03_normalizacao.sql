@@ -117,3 +117,32 @@ update clientes set id_complemento = 2 where id_cliente in (2, 3, 7, 17);
 alter table clientes drop complemento;
 
 COMMIT;
+
+---
+BEGIN;
+
+alter table clientes add id_uf integer;
+alter table clientes add id_municipio integer;
+
+update clientes set id_uf = 1 where id_cliente in (3, 2, 1 , 11, 10);
+update clientes set id_uf = 2 where id_cliente in (17, 5, 4, 14, 15);
+update clientes set id_uf = 3 where id_cliente in (7, 13, 12, 6);
+update clientes set id_uf = 4 where id_cliente = 8;
+update clientes set id_uf = 5 where id_cliente = 9;
+update clientes set id_uf = 6 where id_cliente = 7;
+
+update clientes set id_municipio = 1 where id_cliente in (1, 2, 10, 11);
+update clientes set id_municipio = 2 where id_cliente = 3;
+update clientes set id_municipio = 3 where id_cliente = 4; 
+update clientes set id_municipio = 4 where id_cliente = 5; 
+update clientes set id_municipio = 5 where id_cliente in (13, 12, 6);
+update clientes set id_municipio = 6 where id_cliente = 7;
+update clientes set id_municipio = 7 where id_cliente = 8;
+update clientes set id_municipio = 8 where id_cliente = 9;
+update clientes set id_municipio = 9 where id_cliente in (14, 15);
+update clientes set id_municipio = 10 where id_cliente = 17;
+
+alter table clientes drop municipio;
+alter table clientes drop uf;
+
+COMMIT;

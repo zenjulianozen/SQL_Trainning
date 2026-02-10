@@ -75,3 +75,17 @@ create table uf (
 );
 
 COMMIT;
+
+---
+BEGIN;
+
+create table municipio (
+	id_municipio integer not null,
+	nome varchar(30) not null,
+	id_uf integer not null,
+
+	constraint pk_mnc_id_municipio primary key (id_municipio),
+	constraint un_nmc_nome unique (nome)
+);
+
+COMMIT;
