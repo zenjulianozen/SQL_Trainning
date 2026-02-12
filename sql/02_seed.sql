@@ -149,3 +149,56 @@ insert into municipio (id_municipio, nome, id_uf) values (9, 'União da Vitória
 insert into municipio (id_municipio, nome, id_uf) values (10, 'Curitiba', 2);
 
 COMMIT;
+
+---
+BEGIN;
+
+insert into vendedores (id_vendedor, nome) values (1, 'André');
+insert into vendedores (id_vendedor, nome) values (2, 'Alisson');
+insert into vendedores (id_vendedor, nome) values (3, 'José');
+insert into vendedores (id_vendedor, nome) values (4, 'Ailton');
+insert into vendedores (id_vendedor, nome) values (5, 'Maria');
+insert into vendedores (id_vendedor, nome) values (6, 'Suelem');
+insert into vendedores (id_vendedor, nome) values (7, 'Aline');
+insert into vendedores (id_vendedor, nome) values (8, 'Silvana');
+
+COMMIT;
+
+---
+BEGIN;
+
+insert into fornecedores (id_fornecedor, nome) values (1, 'Cap. Computadores');
+insert into fornecedores (id_fornecedor, nome) values (2, 'AA. Computadores');
+insert into fornecedores (id_fornecedor, nome) values (3, 'BB. Máquinas');
+
+COMMIT;
+
+---
+BEGIN;
+
+insert into transportadoras (id_transportadora , id_municipio, nome, logradouro, numero)
+values (1, 2, 'BS. Transportes', 'Rua das Limas', '01');
+insert into transportadoras (id_transportadora , id_municipio, nome, logradouro, numero)
+values (2, 3, 'União Transportes', null, null);
+
+COMMIT;
+
+---
+BEGIN;
+
+insert into produtos (id_produto, id_fornecedor, nome, valor)
+values (1, 1, 'Microcopmutador', 800);
+insert into produtos (id_produto, id_fornecedor, nome, valor)
+values (2, 1, 'Monitor', 500);
+insert into produtos (id_produto, id_fornecedor, nome, valor)
+values (3, 2, 'Placa Mãe', 200);
+insert into produtos (id_produto, id_fornecedor, nome, valor)
+values (4, 2, 'HD', 150);
+insert into produtos (id_produto, id_fornecedor, nome, valor)
+values (5, 2, 'Placa de Vídeo', 200);
+insert into produtos (id_produto, id_fornecedor, nome, valor)
+values (6, 3, 'Memória RAM', 100);
+insert into produtos (id_produto, id_fornecedor, nome, valor)
+values (7, 1, 'Case', 35);
+
+COMMIT;

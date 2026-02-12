@@ -60,3 +60,59 @@ foreign key (id_municipio)
 references municipio (id_municipio);
 
 COMMIT;
+
+---
+BEGIN;
+
+alter table transportadoras
+add constraint fk_trn_id_municipio
+foreign key (id_municipio)
+references municipio (id_municipio);
+
+COMMIT;
+
+---
+BEGIN;
+
+alter table produtos
+add constraint fk_prd_id_fornecedor
+foreign key (id_fornecedor)
+references fornecedores (id_fornecedor);
+
+COMMIT;
+
+---
+BEGIN;
+
+alter table pedidos
+add constraint fk_ped_id_cliente
+foreign key (id_cliente)
+references clientes (id_cliente);
+
+alter table pedidos
+add constraint fk_ped_id_transportadora
+foreign key (id_transportadora)
+references transportadoras (id_transportadora);
+
+alter table pedidos
+add constraint fk_ped_id_vendedor
+foreign key (id_vendedor)
+references vendedores (id_vendedor);
+
+COMMIT;
+
+---
+BEGIN;
+
+alter table pedidos_produtos
+add constraint fk_ppr_id_pedido
+foreign key (id_pedido)
+references pedidos (id_pedido);
+
+alter table pedidos_produtos
+add constraint fk_ppr_id_produto
+foreign key (id_produto)
+references produtos (id_produto);
+
+COMMIT;
+

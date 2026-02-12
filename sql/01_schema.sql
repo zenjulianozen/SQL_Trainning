@@ -89,3 +89,86 @@ create table municipio (
 );
 
 COMMIT;
+
+---
+BEGIN;
+
+create table fornecedores (
+	id_fornecedor integer not null,
+	nome varchar(30) not null,
+
+	constraint pk_frn_id_fornecedor primary key (id_fornecedor),
+	constraint un_frn_nome unique (nome)
+);
+
+COMMIT;
+
+---
+BEGIN;
+
+create table vendedores (
+	id_vendedor integer not null,
+	nome varchar(30) not null,
+
+	constraint pk_vnd_id_vendedor primary key (id_vendedor),
+	constraint un_vnd_nome unique (nome)
+);
+
+COMMIT;
+
+---
+BEGIN;
+
+create table transportadoras (
+	id_transportadora integer not null,
+	id_municipio integer,
+	nome varchar(30) not null,
+	logradouro varchar(50),
+	numero varchar(10),
+
+	constraint pk_trn_id_transportadora primary key (id_transportadora),
+	constraint un_trn_nome unique (nome)
+);
+
+COMMIT;
+
+---
+BEGIN;
+
+create table produtos (
+	id_produto integer not null,
+	id_fornecedor integer not null,
+	nome varchar(50) not null,
+	valor numeric(10,2) not null,
+
+	constraint pk_prd_id_produto primary key (id_produto)
+);
+
+COMMIT;
+
+---
+BEGIN;
+
+create table pedidos (
+	id_pedido integer not null,
+	id_cliente integer not null,
+	id_transportadora integer,
+	id_vendedor integer not null,
+	data_pedido date not null,
+	valor numeric(10,2) not null,
+
+	constraint pk_ped_id_pedido primary key (id_pedido)
+);
+
+SELECT * FROM PEDIDOS;
+
+create table pedidos_produtos (
+	id_pedido integer not null,
+	id_produto integer not null,
+	quantidade integer not null,
+	valor_un numeric(10,2) not null
+);
+
+SELECT * FROM PEDIDOS_PRODUTOS;
+
+COMMIT;
