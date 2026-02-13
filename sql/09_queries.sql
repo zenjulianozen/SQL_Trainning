@@ -83,7 +83,9 @@ order by municipio
 select nome from vendedores order by nome
 
 --- 2. Os produtos que o preço seja maior que R$200,00, em ordem crescente pelo preço.
-select id_produto, nome, valor from produtos order by valor desc
+select id_produto, nome, valor from produtos 
+where valor > 200
+order by valor
 
 -- 3. O nome do produto, o preço e o preço reajustado em 10%, ordenado pelo nome do produto.
 select nome, valor, valor * 1.10 as valor_ajus from produtos order by nome
@@ -97,3 +99,105 @@ where u.sigla = 'RS';
 select id_pedido, data_pedido, valor from pedidos
 where data_pedido between '2008-04-10' and '2008-04-25'
 order by valor;
+
+-- 6. Os pedidos que o valor esteja entre R$1.000,00 e R$1.500,00.
+select id_pedido, valor from pedidos
+where valor between 1000 and 1500;
+
+--7. Os pedidos que o valor não esteja entre R$100,00 e R$500,00.
+select id_pedido, valor from pedidos
+where valor not between 100 and 500;
+
+-- 8. Os pedidos do vendedor André ordenado pelo valor em ordem decrescente.
+select p.id_pedido, v.nome as vendedor,  p.valor
+from pedidos p
+join vendedores v on p.id_vendedor = v.id_vendedor
+where v.nome = 'André'
+order by p.valor desc;
+
+-- 9. Os pedidos do cliente Manoel ordenado pelo valor em ordem crescente.
+select p.id_pedido, c.nome as cliente, p.valor
+from pedidos p
+join clientes c on p.id_cliente = c.id_cliente
+where c.nome = 'Manoel'
+order by p.valor
+
+-- 10. Os pedidos da cliente Jéssica que foram feitos pelo vendedor André.
+select p.id_pedido, c.nome as cliente, v.nome as vendedor
+from pedidos p
+join clientes c on p.id_cliente = c.id_cliente
+join vendedores v on p.id_vendedor = v.id_vendedor
+where c.nome = 'Jessica' and v.nome = 'André';
+
+-- 11. Os pedidos que foram transportados pela transportadora União Transportes.
+select p.id_pedido, t.nome as transportadora
+from pedidos p
+join transportadoras t on p.id_transportadora = t.id_transportadora
+where t.nome = 'União Transportes';
+
+-- 12. Os pedidos feitos pela vendedora Maria ou pela vendedora Aline.
+select p.id_pedido, v.nome as vendedor
+from pedidos p
+join vendedores v on p.id_vendedor = v.id_vendedor
+where v.nome = 'Maria' or v.nome = 'Aline';
+
+-- 13. Os clientes que moram em União da Vitória ou Porto União.
+select c.id_cliente, c.nome as cliente, m.nome as cidade
+from clientes c
+join municipio m on c.id_municipio = m.id_municipio
+where m.nome = 'União da Vitória' or m.nome = 'Porto União';
+
+-- 14. Os clientes que não moram em União da Vitória e nem em Porto União.
+select c.id_cliente, c.nome as cliente, m.nome as cidade
+from clientes c
+join municipio m on c.id_municipio = m.id_municipio
+where m.nome <> 'União da Vitória' and m.nome <> 'Porto União';
+
+-- 15. Os clientes que não informaram o logradouro.
+select id_cliente, nome, logradouro
+from clientes
+where logradouro is null;
+
+-- 16. Os clientes que moram em avenidas.
+select id_cliente, nome, logradouro
+from clientes
+where logradouro like 'Av%';
+
+-- 17. Os vendedores que o nome começam com a letra S.
+select id_vendedor, nome
+from vendedores
+where nome like 'S%';
+
+-- 18. Os vendedores que o nome terminam com a letra A.
+select id_vendedor, nome
+from vendedores
+where nome like '%a';
+
+-- 19. Os vendedores que o nome não começam com a letra A.
+select id_vendedor, nome
+from vendedores
+where nome not like 'A%';
+
+-- 20. Os municípios que começam com a letra P e são de Santa Catarina.
+select m.id_municipio, m.nome
+from municipio m
+join uf u on m.id_uf = u.id_uf 
+where m.nome like 'P%' and u.sigla = 'SC';
+
+-- 21. As transportadoras que informaram o endereço.
+select id_transportadora, nome, logradouro
+from transportadoras
+where logradouro is not null;
+
+-- 22. Os itens do pedido 01.
+select pp.id_pedido, pr.nome, pp.quantidade, pp.valor_un 
+from pedidos_produtos pp
+join produtos pr on pp.id_produto = pr.id_produto
+where pp.id_pedido = 1;
+
+-- 23. Os itens do pedido 06 ou do pedido 10.
+select pp.id_pedido, pr.nome, pp.quantidade, pp.valor_un 
+from pedidos_produtos pp
+join produtos pr on pp.id_produto = pr.id_produto
+where pp.id_pedido in (6, 10)
+order by pp.id_pedido;
