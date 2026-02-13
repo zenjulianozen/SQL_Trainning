@@ -160,15 +160,11 @@ create table pedidos (
 	constraint pk_ped_id_pedido primary key (id_pedido)
 );
 
-SELECT * FROM PEDIDOS;
-
 create table pedidos_produtos (
 	id_pedido integer not null,
 	id_produto integer not null,
 	quantidade integer not null,
 	valor_un numeric(10,2) not null
 );
-
-SELECT * FROM PEDIDOS_PRODUTOS;
 
 COMMIT;

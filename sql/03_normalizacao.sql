@@ -146,3 +146,16 @@ alter table clientes drop municipio;
 alter table clientes drop uf;
 
 COMMIT;
+
+---
+BEGIN;
+
+update transportadoras set id_municipio = 9 where id_transportadora = 1;
+update transportadoras set id_municipio = 5 where id_transportadora = 2;
+
+COMMIT;
+
+---
+BEGIN;
+update clientes set nome = 'Manoel' where id_cliente =1;
+COMMIT;

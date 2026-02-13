@@ -1,4 +1,4 @@
--- Exercícios 01:
+-- Tasks
 
 -- Retorne o nome, sexo, profissão de todos os clientes, em ordem de nome decrescente
 select nome, genero as "sexo", profissao
@@ -75,6 +75,25 @@ order by nome
 -- Generic query
 select * from uf
 
----
+--- Generic query
 select municipio, uf from clientes
 order by municipio
+
+--- 1. Somente o nome de todos os vendedores em ordem alfabética.
+select nome from vendedores order by nome
+
+--- 2. Os produtos que o preço seja maior que R$200,00, em ordem crescente pelo preço.
+select id_produto, nome, valor from produtos order by valor desc
+
+-- 3. O nome do produto, o preço e o preço reajustado em 10%, ordenado pelo nome do produto.
+select nome, valor, valor * 1.10 as valor_ajus from produtos order by nome
+
+-- 4. Os municípios do Rio Grande do Sul.
+select m.id_municipio, m.nome, u.nome from municipio m
+join uf u on m.id_uf = u.id_uf
+where u.sigla = 'RS';
+
+-- 5. Os pedidos feitos entre 10/04/2008 e 25/04/2008 ordenado pelo valor.
+select id_pedido, data_pedido, valor from pedidos
+where data_pedido between '2008-04-10' and '2008-04-25'
+order by valor;

@@ -202,3 +202,91 @@ insert into produtos (id_produto, id_fornecedor, nome, valor)
 values (7, 1, 'Case', 35);
 
 COMMIT;
+
+---
+BEGIN;
+
+insert into pedidos (id_pedido, data_pedido, valor, id_cliente, id_transportadora, id_vendedor)
+values (1, '2008-04-01', 1300, 1, 1, 1);
+insert into pedidos (id_pedido, data_pedido, valor, id_cliente, id_transportadora, id_vendedor)
+values (2, '2008-04-01', 500, 1, 1, 1);
+insert into pedidos (id_pedido, data_pedido, valor, id_cliente, id_transportadora, id_vendedor)
+values (3, '2008-04-02', 300, 11, 2, 5);
+insert into pedidos (id_pedido, data_pedido, valor, id_cliente, id_transportadora, id_vendedor)
+values (4, '2008-04-05', 1000, 8, 1, 7);
+insert into pedidos (id_pedido, data_pedido, valor, id_cliente, id_transportadora, id_vendedor)
+values (5, '2008-04-06', 200, 9, 2, 6);
+insert into pedidos (id_pedido, data_pedido, valor, id_cliente, id_transportadora, id_vendedor)
+values (6, '2008-04-06', 1985, 10, 1, 6);
+insert into pedidos (id_pedido, data_pedido, valor, id_cliente, id_transportadora, id_vendedor)
+values (7, '2008-04-06', 800, 3, 1, 7);
+insert into pedidos (id_pedido, data_pedido, valor, id_cliente, id_transportadora, id_vendedor)
+values (8, '2008-04-06', 175, 3, null, 7);
+insert into pedidos (id_pedido, data_pedido, valor, id_cliente, id_transportadora, id_vendedor)
+values (9, '2008-04-07', 1300, 12, null, 8);
+insert into pedidos (id_pedido, data_pedido, valor, id_cliente, id_transportadora, id_vendedor)
+values (10, '2008-04-10', 200, 6, 1, 8);
+insert into pedidos (id_pedido, data_pedido, valor, id_cliente, id_transportadora, id_vendedor)
+values (11, '2008-04-15', 300, 15, 2, 1);
+insert into pedidos (id_pedido, data_pedido, valor, id_cliente, id_transportadora, id_vendedor)
+values (12, '2008-04-20', 500, 15, 2, 5);
+insert into pedidos (id_pedido, data_pedido, valor, id_cliente, id_transportadora, id_vendedor)
+values (13, '2008-04-20', 350, 9, 1, 7);
+insert into pedidos (id_pedido, data_pedido, valor, id_cliente, id_transportadora, id_vendedor)
+values (14, '2008-04-23', 300, 2, 1, 5);
+insert into pedidos (id_pedido, data_pedido, valor, id_cliente, id_transportadora, id_vendedor)
+values (15, '2008-04-25', 200, 11, null, 5);
+
+COMMIT;
+
+---
+BEGIN;
+
+insert into pedidos_produtos (id_pedido, id_produto, quantidade, valor_un)
+values (1, 1, 1, 800);
+insert into pedidos_produtos (id_pedido, id_produto, quantidade, valor_un)
+values (1, 2, 1, 500);
+insert into pedidos_produtos (id_pedido, id_produto, quantidade, valor_un)
+values (2, 2, 1, 500);
+insert into pedidos_produtos (id_pedido, id_produto, quantidade, valor_un)
+values (3, 4, 2, 150);
+insert into pedidos_produtos (id_pedido, id_produto, quantidade, valor_un)
+values (4, 1, 1, 800);
+insert into pedidos_produtos (id_pedido, id_produto, quantidade, valor_un)
+values (4, 3, 1, 200);
+insert into pedidos_produtos (id_pedido, id_produto, quantidade, valor_un)
+values (5, 3, 1, 200);
+insert into pedidos_produtos (id_pedido, id_produto, quantidade, valor_un)
+values (6, 1, 2, 800);
+insert into pedidos_produtos (id_pedido, id_produto, quantidade, valor_un)
+values (6, 7, 1, 35);
+insert into pedidos_produtos (id_pedido, id_produto, quantidade, valor_un)
+values (6, 5, 1, 200);
+insert into pedidos_produtos (id_pedido, id_produto, quantidade, valor_un)
+values (6, 4, 1, 150);
+insert into pedidos_produtos (id_pedido, id_produto, quantidade, valor_un)
+values (7, 1, 1, 800);
+insert into pedidos_produtos (id_pedido, id_produto, quantidade, valor_un)
+values (8, 7, 5, 35);
+insert into pedidos_produtos (id_pedido, id_produto, quantidade, valor_un)
+values (9, 1, 1, 800);
+insert into pedidos_produtos (id_pedido, id_produto, quantidade, valor_un)
+values (9, 2, 1, 500);
+insert into pedidos_produtos (id_pedido, id_produto, quantidade, valor_un)
+values (10, 5, 1, 200);
+insert into pedidos_produtos (id_pedido, id_produto, quantidade, valor_un)
+values (11, 5, 1, 200);
+insert into pedidos_produtos (id_pedido, id_produto, quantidade, valor_un)
+values (11, 6, 1, 100);
+insert into pedidos_produtos (id_pedido, id_produto, quantidade, valor_un)
+values (12, 2, 1, 500);
+insert into pedidos_produtos (id_pedido, id_produto, quantidade, valor_un)
+values (13, 3, 1, 200);
+insert into pedidos_produtos (id_pedido, id_produto, quantidade, valor_un)
+values (13, 4, 1, 150);
+insert into pedidos_produtos (id_pedido, id_produto, quantidade, valor_un)
+values (14, 6, 3, 100);
+insert into pedidos_produtos (id_pedido, id_produto, quantidade, valor_un)
+values (15, 3, 1, 200);
+
+COMMIT;
