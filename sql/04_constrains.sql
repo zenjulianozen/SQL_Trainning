@@ -116,3 +116,12 @@ references produtos (id_produto);
 
 COMMIT;
 
+---
+BEGIN;
+
+alter table pedidos_produtos
+add constraint pk_ppr_id_pedido_produto
+primary key (id_pedido, id_produto);
+
+COMMIT;
+
