@@ -201,3 +201,55 @@ from pedidos_produtos pp
 join produtos pr on pp.id_produto = pr.id_produto
 where pp.id_pedido in (6, 10)
 order by pp.id_pedido;
+
+--
+-- 1. A média dos valores de vendas dos vendedores que venderam mais que R$ 200,00.
+select v.id_vendedor, v.nome, avg(p.valor) as avg_vendas 
+from pedidos p
+join vendedores v on p.id_vendedor = v.id_vendedor
+group by v.id_vendedor, v.nome having avg(p.valor) > 200
+order by avg_vendas desc;
+
+-- 2. Os vendedores que venderam mais que R$ 1500,00.
+select v.id_vendedor, v.nome, sum(p.valor) as total_vendas
+from pedidos p
+join vendedores v on p.id_vendedor = v.id_vendedor
+group by v.id_vendedor, v.nome having sum(p.valor) > 1500
+order by total_vendas desc;
+
+--3. O somatório das vendas de cada vendedor.
+select v.id_vendedor, v.nome, sum(p.valor) as total_vendas
+from pedidos p
+join vendedores v on p.id_vendedor = v.id_vendedor
+group by v.id_vendedor, v.nome
+order by total_vendas desc;
+
+--4. A quantidade de municípios.
+select count(id_municipio) as count_municipio from municipio
+
+--5. A quantidade de municípios que são do Paraná ou de Santa Catarina.
+select count(m.id_municipio) as count_municipio, uf.sigla
+from municipio m
+join uf uf on m.id_uf = uf.id_uf
+where sigla in ('PR', 'SC')
+group by uf.sigla;
+
+--6. A quantidade de municípios por estado.
+select count(m.id_municipio) as count_municipio, uf.sigla
+from municipio m
+join uf uf on m.id_uf = uf.id_uf
+group by uf.sigla
+
+--7. A quantidade de clientes que informaram o logradouro.
+select count(id_cliente)
+from clientes
+where logradouro is not null
+and trim(logradouro) <> '';
+
+--8. A quantidade de clientes por município.
+select count(c.id_cliente), m.nome
+from clientes c
+join municipio m on c.id_municipio = m.id_municipio
+group by m.nome;
+
+
