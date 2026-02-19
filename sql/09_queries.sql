@@ -252,4 +252,78 @@ from clientes c
 join municipio m on c.id_municipio = m.id_municipio
 group by m.nome;
 
+--9. A quantidade de fornecedores.
+select count(id_fornecedor) from fornecedores;
 
+--10. A quantidade de produtos por fornecedor.
+select p.id_fornecedor, f.nome, count(p.id_produto)
+from produtos p
+join fornecedores f on p.id_fornecedor = f.id_fornecedor
+group by p.id_fornecedor, f.nome
+order by id_fornecedor;
+
+--11. A média de preços dos produtos do fornecedor Cap. Computadores.
+select p.id_fornecedor, f.nome, avg(valor)
+from produtos p
+join fornecedores f on p.id_fornecedor = f.id_fornecedor
+where f.nome = 'Cap. Computadores'
+group by p.id_fornecedor, f.nome;
+
+--12. O somatório dos preços de todos os produtos.
+select sum(valor) from produtos;
+
+--13. O nome do produto e o preço somente do produto mais caro.
+select id_produto, nome, valor from produtos
+where valor = (select max(valor) from produtos);
+
+--14. O nome do produto e o preço somente do produto mais barato.
+select id_produto, nome, valor from produtos
+where valor = (select min(valor) from produtos);
+
+--15. A média de preço de todos os produtos.
+select avg(valor) from produtos;
+
+--16. A quantidade de transportadoras.
+select count(*) from transportadoras;
+
+--17. A média do valor de todos os pedidos.
+select avg(valor) from pedidos;
+
+--18. O somatório do valor do pedido agrupado por cliente.
+select id_cliente, sum(valor) from pedidos
+group by id_cliente
+order by id_cliente;
+
+--19. O somatório do valor do pedido agrupado por vendedor.
+select id_vendedor, sum (valor) from pedidos
+group by id_vendedor
+order by id_vendedor;
+
+--20. O somatório do valor do pedido agrupado por transportadora.
+select id_transportadora, sum(valor) from pedidos
+where id_transportadora is not null
+group by id_transportadora
+order by id_transportadora;
+
+--21. O somatório do valor do pedido agrupado pela data.
+select data_pedido, sum(valor) from pedidos
+group by data_pedido
+order by data_pedido;
+
+--22. O somatório do valor do pedido agrupado por cliente, vendedor e transportadora.
+select id_pedido, id_cliente, id_vendedor, id_transportadora, sum(valor)
+from pedidos
+group by id_pedido, id_cliente, id_vendedor, id_transportadora
+order by id_pedido;
+
+--23. O somatório do valor do pedido que esteja entre 01/04/2008 e 10/12/2009 e que seja maior que R$ 200,00.
+select id_pedido, sum(valor) from pedidos
+where data_pedido between '2008-04-01' and '2009-12-10' 
+group by id_pedido having sum(valor) > 200;
+
+--24. A média do valor do pedido do vendedor André.
+select v.nome, avg(p.valor) 
+from pedidos p
+join vendedores v on p.id_vendedor = v.id_vendedor
+where v.nome = 'André'
+group by v.nome;
