@@ -1,3 +1,4 @@
+
 ---
 BEGIN;
 
@@ -158,4 +159,9 @@ COMMIT;
 ---
 BEGIN;
 update clientes set nome = 'Manoel' where id_cliente =1;
+COMMIT;
+
+---
+BEGIN;
+update produtos set nome = 'Microcomputador' where nome = 'Microcopmutador'
 COMMIT;
