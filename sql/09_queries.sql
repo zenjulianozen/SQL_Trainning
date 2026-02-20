@@ -327,3 +327,94 @@ from pedidos p
 join vendedores v on p.id_vendedor = v.id_vendedor
 where v.nome = 'André'
 group by v.nome;
+
+--25. A média do valor do pedido da cliente Jéssica.
+select c.nome, avg(p.valor)
+from pedidos p
+join clientes c on p.id_cliente = c.id_cliente
+where c.nome = 'Jessica'
+group by c.nome;
+
+--26. A quantidade de pedidos transportados pela transportadora BS. Transportes.
+select t.nome, count (p.id_pedido)
+from pedidos p
+join transportadoras t on p.id_transportadora = t.id_transportadora
+where t.nome = 'BS. Transportes'
+group by t.nome;
+
+--27. A quantidade de pedidos agrupados por vendedor.
+select v.nome, count(p.id_pedido)
+from pedidos p
+join vendedores v on p.id_vendedor = v.id_vendedor
+group by v.nome;
+
+--28. A quantidade de pedidos agrupados por cliente.
+select c.nome, count(p.id_pedido)
+from pedidos p
+join clientes c on p.id_cliente = c.id_cliente
+group by c.nome;
+
+--29. A quantidade de pedidos entre 15/04/2008 e 25/04/2008.
+select count(id_pedido)
+from pedidos
+where data_pedido between '2008-04-15' and '2008-04-25';
+
+--30. A quantidade de pedidos que o valor seja maior que R$ 1.000,00.
+select count(id_pedido)
+from pedidos
+where valor > 1000;
+
+--31. A quantidade de microcomputadores vendida.
+select p.nome, sum(ppr.quantidade)
+from pedidos_produtos ppr
+join produtos p on ppr.id_produto = p.id_produto
+where p.nome = 'Microcomputador'
+group by p.nome;
+
+--32. A quantidade de produtos vendida agrupado por produto.
+select p.nome, sum(ppr.quantidade) as qnt
+from pedidos_produtos ppr
+join produtos p on ppr.id_produto = p.id_produto
+group by p.nome
+order by qnt desc;
+
+--33. O somatório do valor dos produtos dos pedidos, agrupado por pedido.
+select id_pedido, sum(valor_un*quantidade) as total
+from pedidos_produtos
+group by id_pedido
+order by id_pedido;
+
+--34. A quantidade de produtos agrupados por pedido.
+select id_pedido, sum(quantidade)
+from pedidos_produtos
+group by id_pedido
+order by id_pedido;
+
+--35. O somatório dos valores unitários de todos os produtos.
+select sum(valor) from produtos;
+
+--36. A média dos produtos do pedido 6.
+select avg(valor_un*quantidade)
+from pedidos_produtos
+where id_pedido = 6;
+
+--37. O valor do maior produto do pedido.
+select id_pedido, max(valor_un) as maior_vlr
+from pedidos_produtos
+group by id_pedido
+order by id_pedido;
+
+--38. O valor do menor produto do pedido.
+select id_pedido, min(valor_un) as menor_vlr
+from pedidos_produtos
+group by id_pedido
+order by id_pedido;
+
+--39. O somatório da quantidade de produtos por pedido.
+select id_pedido, sum(quantidade) as quant
+from pedidos_produtos
+group by id_pedido
+order by id_pedido;
+
+--40. O somatório da quantidade de todos os produtos do pedido.
+select sum(quantidade) from pedidos_produtos;
