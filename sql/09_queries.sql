@@ -418,3 +418,118 @@ order by id_pedido;
 
 --40. O somatório da quantidade de todos os produtos do pedido.
 select sum(quantidade) from pedidos_produtos;
+
+
+--1. O nome do cliente, a profissão, a nacionalidade, o logradouro, o número, 
+--o complemento, o bairro, o município e a unidade de federação.
+select * from clientes
+select cli.nome, prof.nome, nasc.nome, cli.logradouro, cli.numero, compl.nome, bair.nome, mun.nome, uf.sigla
+from clientes cli
+join profissao prof on cli.id_profissao = prof.id_profissao
+join nacionalidade nasc on cli.id_nacionalidade = nasc.id_nacionalidade
+join complemento compl on cli.id_complemento = compl.id_complemento
+join bairro bair on cli.id_bairro = bair.id_bairro
+join municipio mun on cli.id_municipio = mun.id_municipio
+join uf uf on cli.id_uf = uf.id_uf;
+
+--2. O nome do produto, o valor e o nome do fornecedor.
+select prod.nome, prod.valor, forn.nome
+from produtos prod
+join fornecedores forn on prod.id_fornecedor = forn.id_fornecedor;
+
+--3. O nome da transportadora e o município.
+select transp.nome, mun.nome
+from transportadoras transp
+join municipio mun on transp.id_municipio = mun.id_municipio;
+
+--4. A data do pedido, o valor, o nome do cliente, 
+--o nome da transportadora e o nome do vendedor.
+select ped.data_pedido, cli.nome, transp.nome, vend.nome, ped.valor
+from pedidos ped
+join clientes cli on ped.id_cliente = cli.id_cliente
+join transportadoras transp on ped.id_transportadora = transp.id_transportadora
+join vendedores vend on ped.id_vendedor = vend.id_vendedor;
+
+--5. O nome do produto, a quantidade e o valor unitário dos produtos do pedido.
+select * from pedidos_produtos;
+select ppr.id_pedido, prod.nome, ppr.quantidade, ppr.valor_un
+from pedidos_produtos ppr
+join produtos prod on ppr.id_produto = prod.id_produto;
+
+--6. O nome dos clientes e a data do pedido dos clientes que fizeram algum 
+--pedido (ordenado pelo nome do cliente).
+select cli.nome, ped.data_pedido
+from pedidos ped
+inner join clientes cli on ped.id_cliente = cli.id_cliente
+order by cli.nome;
+
+--7. O nome dos clientes e a data do pedido de todos os clientes, 
+--independente se tenham feito pedido (ordenado pelo nome do cliente).
+select cli.nome, ped.data_pedido
+from pedidos ped
+right join clientes cli on ped.id_cliente = cli.id_cliente
+order by cli.nome;
+
+--8. O nome da cidade e a quantidade de clientes que moram naquela cidade.
+select mun.nome, count(cli.id_cliente) as clientes
+from clientes cli
+join municipio mun on cli.id_municipio = mun.id_municipio
+group by mun.nome
+order by mun.nome;
+
+--9. O nome do fornecedor e a quantidade de produtos de cada fornecedor.
+select forn.nome, count(prod.id_produto) as produtos
+from produtos prod
+join fornecedores forn on prod.id_fornecedor = forn.id_fornecedor
+group by forn.nome
+order by forn.nome;
+
+--10.O nome do cliente e o somatório do valor do pedido (agrupado por cliente).
+select cli.nome, sum(ped.valor)
+from pedidos ped
+join clientes cli on ped.id_cliente = cli.id_cliente
+group by cli.nome
+order by cli.nome;
+
+--11.O nome do vendedor e o somatório do valor do pedido (agrupado por vendedor).
+select vend.nome, sum(ped.valor)
+from pedidos ped
+join vendedores vend on ped.id_vendedor = vend.id_vendedor
+group by vend.nome
+order by vend.nome;
+
+--12.O nome da transportadora e o somatório do valor do pedido (agrupado por transportadora).
+select transp.nome, sum(ped.valor)
+from pedidos ped
+join transportadoras transp on ped.id_transportadora = transp.id_transportadora
+group by transp.nome
+order by transp.nome;
+
+--13.O nome do cliente e a quantidade de pedidos de cada um (agrupado por cliente).
+select cli.nome, count(ped.id_pedido)
+from pedidos ped
+join clientes cli on ped.id_cliente = cli.id_cliente
+group by cli.nome
+order by cli.nome;
+
+--14.O nome do produto e a quantidade vendida (agrupado por produto).
+select prod.nome, sum(ppr.quantidade)
+from pedidos_produtos ppr
+join produtos prod on ppr.id_produto = prod.id_produto
+group by prod.nome
+order by prod.nome;
+
+--15.A data do pedido e o somatório do valor dos produtos do 
+--pedido (agrupado pela data do pedido). --- traduzindo o professor, o total vendido por dia.
+select ped.data_pedido, sum(ped.valor)
+from pedidos ped
+group by ped.data_pedido
+order by ped.data_pedido;
+
+--16.A data do pedido e a quantidade de produtos do pedido (agrupado pela data do pedido).
+-- tradução, a quantidade de itens vendidos por dia.
+select ped.data_pedido, sum(ppr.quantidade)
+from pedidos_produtos ppr
+join pedidos ped on ppr.id_pedido = ped.id_pedido
+group by ped.data_pedido
+order by ped.data_pedido;
