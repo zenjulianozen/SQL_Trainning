@@ -634,3 +634,78 @@ select
 		else 'Abaixo de 500'
 	end as faixa
 from produtos;
+
+---
+--1. O nome dos clientes que moram na mesma cidade do Manoel. 
+--Não deve ser mostrado o Manoel.
+select 
+	cli.nome,
+	cli.id_municipio,
+	mun.nome as cidade
+from clientes cli
+join municipio mun on cli.id_municipio = mun.id_municipio
+where cli.id_municipio = (select id_municipio from clientes where nome = 'Manoel')
+and cli.nome <> 'Manoel';
+
+--2. A data e o valor dos pedidos que o valor do pedido seja menor que 
+--a média de todos os pedidos.
+select
+	data_pedido,
+	valor
+from pedidos
+where valor < (select avg(valor) from pedidos);
+
+--3. A data,o valor, o cliente e o vendedor dos pedidos que possuem 2 ou mais produtos.
+select
+	ped.data_pedido,
+	ped.valor,
+	cli.nome as cliente,
+	ven.nome as vendedor
+from pedidos ped
+join clientes cli on ped.id_cliente = cli.id_cliente
+join vendedores ven on ped.id_vendedor = ven.id_vendedor
+where (select count(*) from pedidos_produtos ppr where ppr.id_pedido = ped.id_pedido) >= 2;
+
+--4. O nome dos clientes que moram na mesma cidade da transportadora BS. Transportes.
+select cli.nome, mun.id_municipio, mun.nome 
+from clientes cli
+join municipio mun on cli.id_municipio = mun.id_municipio
+where mun.id_municipio = (
+	select mun.id_municipio 
+	from transportadoras trn
+	join municipio mun on trn.id_municipio = mun.id_municipio
+	where trn.nome = 'BS. Transportes'
+);
+
+--5. O nome do cliente e o município dos clientes que estão localizados 
+--no mesmo município de qualquer uma das transportadoras.
+select cli.nome, mun.id_municipio, mun.nome
+from clientes cli
+join municipio mun on cli.id_municipio = mun.id_municipio
+where mun.id_municipio in (select id_municipio from transportadoras);
+
+--6. Atualizar o valor do pedido em 5% para os pedidos que o somatório 
+--do valor total dos produtos daquele pedido seja maior que a média do valor total
+--de todos os produtos de todos os pedidos.
+BEGIN;
+
+update pedidos set valor = valor * 1.05
+where 
+	(select sum(ppr.valor_un) from pedidos_produtos ppr where id_pedido = ppr.id_pedido)
+	>
+	(select avg(valor_un) from pedidos_produtos);
+
+ROLLBACK; -- para não modificar a bas de dados com exercício.
+
+--7. O nome do cliente e a quantidade de pedidos feitos pelo cliente.
+select cli.nome, count(ped.id_pedido) as quant_pedidos
+from clientes cli
+left join pedidos ped on cli.id_cliente = ped.id_cliente
+group by cli.nome;
+
+--8. Para revisar, refaça o exercício anterior (número 07) utilizando group by 
+--e mostrando somente os clientes que fizeram pelo menos um pedido.
+select cli.nome, count(ped.id_pedido) as quant_pedidos
+from clientes cli
+join pedidos ped on cli.id_cliente = ped.id_cliente
+group by cli.nome;
