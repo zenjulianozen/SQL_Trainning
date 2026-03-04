@@ -28,10 +28,10 @@ COMMIT;
 BEGIN;
 
 alter table fornecedores
-alter column id_fornecedor drop default;
+alter column id_municipio drop default;
 
 alter table fornecedores
-alter column id_fornecedor
+alter column id_municipio
 add generated always as identity;
 
 COMMIT;
@@ -48,102 +48,46 @@ add generated always as identity;
 
 COMMIT;
 
---e. Nacionalidade
+--1. Adicione valores default na tabela de produtos do pedido
+--a. Quantidade com o valor 1
 BEGIN;
 
-alter table nacionalidade
-alter column id_nacionalidade drop default;
-
-alter table nacionalidade
-alter column id_nacionalidade
-add generated always as identity;
+alter table pedidos_produtos
+alter column quantidade
+set default 1;
 
 COMMIT;
 
---f. Pedido
+--b. Valor unitário com o valor 0
 BEGIN;
 
-alter table pedidos
-alter column id_pedido drop default;
-
-alter table pedidos
-alter column id_pedido
-add generated always as identity;
+alter table pedidos_produtos
+alter column valor_un
+set default 0;
 
 COMMIT;
 
---g. Pedido produto (verificar se é necessário)
-select * from pedidos_produtos
---não é necessário
-
---h. Profissão
-BEGIN;
-
-alter table profissao
-alter column id_profissao drop default;
-
-alter table profissao
-alter column id_profissao
-add generated always as identity;
-
-COMMIT;
-
---i. Transportadora
-BEGIN;
-
-alter table transportadoras
-alter column id_transportadora drop default;
-
-alter table transportadoras
-alter column id_transportadora
-add generated always as identity;
-
-COMMIT;
-
---j. UF
-BEGIN;
-
-alter table uf
-alter column id_uf drop default;
-
-alter table uf
-alter column id_uf
-add generated always as identity;
-
-COMMIT;
-
---k. Vendedor
-BEGIN;
-
-alter table vendedores
-alter column id_vendedor drop default;
-
-alter table vendedores
-alter column id_vendedor
-add generated always as identity;
-
-COMMIT;
-
---prof esqueceu: produtos
+--2. Adicione valor default na tabela de produtos
+--a. Valor com o valor 0
 BEGIN;
 
 alter table produtos
-alter column id_produto drop default;
-
-alter table produtos
-alter column id_produto
-add generated always as identity;
+alter column valor
+set default 0;
 
 COMMIT;
 
---prof esqueceu: bairro
+
+---1. Adicione índices nas seguintes tabelas e campos
+--a. Pedido – data do pedido
+--b. Produto – nome
+
 BEGIN;
 
-alter table bairro
-alter column id_bairro drop default;
+create index idx_data_pedido
+on pedidos(data_pedido);
 
-alter table bairro
-alter column id_bairro
-add generated always as identity;
+create index idx_produto
+on produtos(nome);
 
 COMMIT;
