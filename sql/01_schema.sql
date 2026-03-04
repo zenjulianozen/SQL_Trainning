@@ -23,7 +23,6 @@ CREATE TABLE clientes (
 );
 
 COMMIT;
-
 ---
 BEGIN;
 

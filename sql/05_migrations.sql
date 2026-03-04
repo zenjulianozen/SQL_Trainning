@@ -42,7 +42,7 @@ BEGIN;
 alter table municipio
 alter column id_municipio drop default;
 
-alter table municip
+alter table municipio
 alter column id_municipio
 add generated always as identity;
 
