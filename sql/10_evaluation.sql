@@ -68,20 +68,16 @@ create table livros(
 	idLivro integer not null generated always as identity primary key,
 	idEditora integer not null,
 	idCategoria integer not null,
-	nome text unique not null
+	nome text unique not null,
+
+constraint fk_idEditora
+	foreign key (idEditora)
+	references editoras(idEditora),
+
+constraint fk_idCategoria
+	foreign key (idCategoria)
+	references categorias(idCategoria)
 );
-
-alter table livros
-add constraint fk_idEditora
-foreign key (idEditora)
-references editoras(idEditora);
-
-alter table livros
-add constraint fk_idCategoria
-foreign key (idCategoria)
-references categorias(idCategoria);
-
-select * from livros;
 
 COMMIT;
 
@@ -109,5 +105,3 @@ join editoras e on e.nome = lista.editora
 join categorias c on c.nome = lista.categoria;
 
 COMMIT;
-
-SELECT * FROM LIVROS;
