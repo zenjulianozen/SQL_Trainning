@@ -105,3 +105,108 @@ join editoras e on e.nome = lista.editora
 join categorias c on c.nome = lista.categoria;
 
 COMMIT;
+
+---10. Crie uma tabela chamada LIVRO_AUTOR, de acordo com os dados abaixo: 
+BEGIN;
+create table livro_autor (
+	idLivro integer not null,
+	idAutor integer not null,
+
+	constraint pk_livro_autor
+		primary key (idLivro, idAutor),
+
+	constraint fk_idLivro
+		foreign key (idLivro)
+		references livros(idLivro)
+		on delete cascade,
+
+	constraint fk_idAutor
+		foreign key (idAutor)
+		references autores(idAutor)
+);
+COMMIT;
+
+---11. Insira os dados abaixo na tabela LIVRO_AUTOR.
+BEGIN;
+insert into livro_autor (idLivro, idAutor)
+select 
+	l.idLivro,
+	a.idAutor
+from (
+	values
+		('Banco de Dados – 1 Edição', 'Waldemar Setzer'),
+		('Banco de Dados – 1 Edição', 'Flávio Soares'),
+		('Oracle DataBase 11G Administração', 'John Watson'),
+		('Programação de Computadores em Java', 'Rui Rossi dos Santos'),
+		('Programação Orientada a Aspectos em Java', 'Antonio Pereira de Resende'),
+		('Programação Orientada a Aspectos em Java', 'Claudiney Calixto Lima'),
+		('HTML5 – Guia Prático', 'Evandro Carlos Teruel'),
+		('XHTML: Guia de Referência para Desenvolvimento na Web', 'Ian Graham'),
+		('PHP para Desenvolvimento Profissional', 'Fabrício Xavier'),
+		('PHP com Programação Orientada a Objetos', 'Pablo Dalloglio')
+) as lista(livro, autor)
+join livros l on l.nome = lista.livro
+join autores a on a.nome = lista.autor;
+
+COMMIT;
+
+---12. Crie uma tabela chamada ALUNO, de acordo com os dados abaixo:
+BEGIN;
+create table alunos(
+	idAluno integer not null generated always as identity primary key,
+	nome text not null
+);
+
+COMMIT;
+
+---13. Insira os dados abaixo na tabela ALUNO. 
+BEGIN;
+insert into alunos(nome)
+values
+	('Mario'),
+	('João'),
+	('Paulo'),
+	('Pedro'),
+	('Maria');
+
+COMMIT;
+
+---14. Crie uma tabela chamada EMPRESTIMO, de acordo com os dados abaixo: 
+BEGIN;
+create table emprestimos(
+	idEmprestimo integer not null generated always as identity primary key,
+	idAluno integer not null,
+	data_emprestimo date not null default current_date,
+	data_devolucao date not null,
+	valor numeric(10,2) not null,
+	devolvido char(1) not null,
+
+	constraint fk_idAluno
+		foreign key (idAluno)
+		references alunos(idAluno)
+);
+
+COMMIT;
+
+---15. Insira os dados abaixo na tabela EMPRESTIMO. 
+BEGIN;
+insert into emprestimos(idAluno, data_emprestimo, data_devolucao, valor, devolvido)
+select
+	a.idAluno,
+	data_emprestimo::date,
+	data_devolucao::date,
+	valor,
+	devolvido
+from (
+	values
+		('Mario', '2012-05-02', '2012-05-12', 10.00, 'S'),
+		('Mario', '2012-04-23', '2012-05-03', 5.00, 'N'),
+		('João', '2012-05-10', '2012-05-20', 12.00, 'N'),
+		('Paulo', '2012-05-10', '2012-05-20', 8.00, 'S'),
+		('Pedro', '2012-05-05', '2012-05-15', 15.00, 'N'),
+		('Pedro', '2012-05-07', '2012-07-17', 20.00, 'S'),
+		('Pedro', '2012-05-08', '2012-05-18', 5.00, 'S')
+) as lista(aluno, data_emprestimo, data_devolucao, valor, devolvido)
+join alunos a on lista.aluno = a.nome;
+
+COMMIT;
