@@ -210,3 +210,85 @@ from (
 join alunos a on lista.aluno = a.nome;
 
 COMMIT;
+
+
+---16. Crie uma tabela chamada EMPRESTIMO_LIVRO, de acordo com os dados abaixo: 
+BEGIN;
+create table emprestimos_livros (
+	idEmprestimo integer not null,
+	idLivro integer not null,
+
+	constraint pk_emprestimo_livro
+		primary key (idEmprestimo, idLivro),
+
+	constraint fk_idEmprestimo
+		foreign key (idEmprestimo)
+		references emprestimos(idEmprestimo),
+
+	constraint fk_idLivro
+		foreign key (idLivro)
+		references livros(idLivro)
+);
+
+COMMIT;
+
+---17. Insira os dados abaixo na tabela EMPRESTIMO_LIVRO.
+BEGIN;
+insert into emprestimos_livros(idEmprestimo, idLivro)
+select
+	idEmprestimo,
+	l.idLivro
+from (
+	values
+		(1, 'Banco de Dados – 1 Edição'),
+		(2, 'Programação Orientada a Aspectos em Java'),
+		(2, 'Programação de Computadores em Java'),
+		(3, 'Oracle DataBase 11G Administração'),
+		(3, 'PHP para Desenvolvimento Profissional'),
+		(4, 'HTML5 – Guia Prático'),
+		(7, 'Programação Orientada a Aspectos em Java'),
+		(6, 'XHTML: Guia de Referência para Desenvolvimento na Web'),
+		(6, 'Banco de Dados – 1 Edição'),
+		(5, 'PHP com Programação Orientada a Objetos')
+) as lista(idEmprestimo, nome)
+join livros l on lista.nome = l.nome;
+
+COMMIT;
+
+---18. Crie os seguintes índices: 
+BEGIN;
+create index idx_data_emprestimo on emprestimos(data_emprestimo);
+create index idx_data_devolucao on emprestimos(data_devolucao);
+COMMIT;
+
+---19. O nome dos autores em ordem alfabética.
+select nome from autores
+order by nome;
+
+---20. O nome dos alunos que começam com a letra P.
+select nome from alunos
+where nome like 'P%';
+
+---21. O nome dos livros da categoria Banco de Dados ou Java.
+select l.idLivro, cat.nome, l.nome from livros l
+join categorias cat on l.idCategoria = cat.idCategoria
+where cat.nome = 'Banco de Dados' or cat.nome = 'Java';
+
+---22. O nome dos livros da editora Bookman. 
+select l.idLivro, edit.nome, l.nome from livros l
+join editoras edit on l.idEditora = edit.idEditora
+where edit.nome = 'Bookman';
+
+---23. Os empréstimos realizados entre 05/05/2012 e 10/05/2012. 
+select * from emprestimos
+where data_emprestimo between '2012-05-05' and '2012-05-10'
+order by data_emprestimo;
+
+---24. Os empréstimos que não foram feitos entre 05/05/2012 e 10/05/2012
+select * from emprestimos
+where data_emprestimo not between '2012-05-05' and '2012-05-10'
+order by data_emprestimo;
+
+---25. Os empréstimos que os livros já foram devolvidos.
+select * from emprestimos
+where devolvido = 'S';
