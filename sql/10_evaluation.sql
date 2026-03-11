@@ -292,3 +292,125 @@ order by data_emprestimo;
 ---25. Os empréstimos que os livros já foram devolvidos.
 select * from emprestimos
 where devolvido = 'S';
+
+---26. A quantidade de livros.
+select count(*) from livros;
+
+---27. O somatório do valor dos empréstimos.
+select sum(valor) from emprestimos;
+
+---28. A média do valor dos empréstimos.
+select avg(valor) from emprestimos;
+
+---29. O maior valor dos empréstimos. 
+select max(valor) from emprestimos;
+
+---30. O menor valor dos empréstimos.
+select min(valor) from emprestimos
+
+---31. O somatório do valor do empréstimo que estão entre 05/05/2012 e 10/05/2012.
+select sum(valor) from emprestimos
+where data_emprestimo between '2012-05-05' and '2012-05-10';
+
+---32. A quantidade de empréstimos que estão entre 01/05/2012 e 05/05/2012
+select count(*) from emprestimos
+where data_emprestimo between '2012-05-01' and '2012-05-05';
+
+---33. O nome do livro, a categoria e a editora (LIVRO) – fazer uma view
+BEGIN;
+create view view_tabLivros as
+select
+	l.nome as livro,
+	c.nome as categoria,
+	e.nome as editora
+from livros l
+join editoras e on l.idEditora = e.idEditora
+join categorias c on l.idCategoria = c.idCategoria;
+
+COMMIT;
+
+---34. O nome do livro e o nome do autor (LIVRO_AUTOR) – fazer uma view. 
+BEGIN;
+create view view_tabLivroAutores as
+select
+	l.nome as livro,
+	a.nome as autor
+from livro_autor la
+join livros l on la.idLivro = l.idLivro
+join autores a on la.idAutor = a.idAutor;
+COMMIT;
+
+---35. O nome dos livros do autor Ian Graham (LIVRO_AUTOR).
+select
+	l.nome as livro,
+	a.nome as autor
+from livro_autor la
+join livros l on la.idLivro = l.idLivro
+join autores a on la.idAutor = a.idAutor
+where a.nome like 'Ian Graham';
+
+---36. O nome do aluno, a data do empréstimo e a data de devolução (EMPRESTIMO).
+select
+	alunos.nome as nome,
+	e.data_emprestimo as emprestimo,
+	e.data_devolucao as devolucao
+from emprestimos e
+join alunos on e.idAluno = alunos.idAluno;
+
+---37. O nome de todos os livros que foram emprestados (EMPRESTIMO_LIVRO). 
+select * from emprestimos_livros
+select
+	distinct(livros.nome)
+from emprestimos_livros el
+join livros on el.idLivro = livros.idLivro;
+
+---38. O nome da editora e a quantidade de livros de cada editora (LIVRO).
+select
+	e.nome as editora,
+	count(l.idlivro) as quantidade
+from livros l
+join editoras e on l.idEditora = e.idEditora
+group by e.nome;
+
+---39. O nome da categoria e a quantidade de livros de cada categoria (LIVRO). 
+select
+	cat.nome as categoria,
+	count(l.idlivro) as quantidade
+from livros l
+join categorias cat on l.idCategoria = cat.idCategoria
+group by cat.nome;
+
+---40. O nome do autor e a quantidade de livros de cada autor (LIVRO_AUTOR).
+select
+	a.nome as autor,
+	count(l.idlivro) as quantidade
+from livro_autor la
+join autores a on la.idAutor = a.idAutor
+join livros l on la.idLivro = l.idLivro
+group by a.nome;
+
+---41. O nome do aluno e a quantidade de empréstimo de cada aluno (EMPRESTIMO_LIVRO).
+select
+	a.nome,
+	count(e.idEmprestimo) as quantidade
+from emprestimos_livros el
+join emprestimos e on el.idemprestimo = e.idemprestimo
+join alunos a on e.idaluno = a.idaluno
+group by a.nome;
+
+---42. O nome do aluno e o somatório do valor total dos empréstimos de cada aluno (EMPRESTIMO). 
+select
+	a.nome,
+	sum(e.valor) as total
+from emprestimos e
+join alunos a on e.idAluno = a.idAluno
+group by a.nome;
+
+---43. O nome do aluno e o somatório do valor total dos empréstimos de cada aluno 
+---somente daqueles que o somatório for maior do que 7,00 (EMPRESTIMO)
+select
+	a.nome,
+	sum(e.valor) as total
+from emprestimos e
+join alunos a on e.idAluno = a.idAluno
+group by a.nome having sum(e.valor) > 7.00;
