@@ -414,3 +414,77 @@ select
 from emprestimos e
 join alunos a on e.idAluno = a.idAluno
 group by a.nome having sum(e.valor) > 7.00;
+
+---44. O nome de todos os alunos em ordem decrescente e em letra maiúscula. 
+select upper(nome) from alunos
+order by nome desc;
+
+---45. Os empréstimos que foram feitos no mês 04 de 2012.
+select * from emprestimos
+where data_emprestimo >= DATE '2012-04-01' and data_emprestimo < DATE '2012-05-01';
+
+select * from emprestimos
+where extract(month from data_emprestimo) = 4
+and extract (year from data_emprestimo) = 2012;
+
+---46. Todos os campos do empréstimo. Caso já tenha sido devolvido, 
+---mostrar a mensagem “Devolução completa”, senão “Em atraso”. 
+select
+	 idEmprestimo,
+	 idAluno,
+	 data_emprestimo,
+	 data_devolucao,
+	 valor,
+	 case
+		when devolvido = 'S' then 'Devolução completa'
+		else 'Em atraso'
+	 end as status	
+from emprestimos;
+
+---47. Somente o caractere 5 até o caractere 10 do nome dos autores.
+select substring(nome, 5, 10) from autores;
+
+---48. O valor do empréstimo e somente o mês da data de empréstimo. 
+---Escreva “Janeiro”, “Fevereiro”, etc
+select
+	coalesce(
+		to_char(data_emprestimo, 'TMMonth'),
+		'Não informado'
+	) as mes_emprestimo,
+	sum(valor)
+from emprestimos
+group by mes_emprestimo;
+
+---49. A data do empréstimo e o valor dos empréstimos que o valor seja 
+---maior que a média de todos os empréstimos.
+select
+	data_emprestimo,
+	valor
+from emprestimos
+where valor > (select avg(valor) from emprestimos);
+
+---50. A data do empréstimo e o valor dos empréstimos que possuem mais de um livro.
+with count_livros as (
+	select 
+		idEmprestimo, 
+		count(idlivro) as total 
+	from emprestimos_livros
+	group by idEmprestimo having count(idLivro)> 1
+)
+
+select
+	e.idEmprestimo,
+	e.data_emprestimo,
+	e.valor
+from emprestimos e
+join count_livros cl on e.idEmprestimo = cl.idEmprestimo
+order by e.idEmprestimo;
+
+---51. A data do empréstimo e o valor dos empréstimos que o valor seja 
+---menor que a soma de todos os empréstimos.
+select 
+	idEmprestimo,
+	data_emprestimo,
+	valor
+from emprestimos
+where valor < (select sum(valor) from emprestimos);
