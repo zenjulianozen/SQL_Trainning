@@ -709,3 +709,8 @@ select cli.nome, count(ped.id_pedido) as quant_pedidos
 from clientes cli
 join pedidos ped on cli.id_cliente = ped.id_cliente
 group by cli.nome;
+
+---
+SELECT schemaname, tablename
+FROM pg_tables
+ORDER BY schemaname;
